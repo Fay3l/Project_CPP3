@@ -83,7 +83,7 @@ function App() {
 const login = () => {setIsLoggedIn(true);connect()}
   
 const connect = () =>{
-  const newWs = new WebSocket("ws://192.168.1.53:8000/products");
+  const newWs = new WebSocket("wss://192.168.1.53:8000/products");
   setWs(newWs);
 
   newWs.onopen = () => {
