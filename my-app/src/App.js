@@ -22,6 +22,7 @@ function App() {
 
   const [data, setData] = useState([]);
   const [number, setNumber] = useState('');
+  const [name,setName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [ws, setWs] = useState(null);
   const [open, setOpen] = React.useState(false);
@@ -110,8 +111,7 @@ function sendSendMessage() {
     {
       ws.send("Send "+name.value+" "+price.value);
     }
-    name.value =""
-    price.value = ""
+    setName("")
     setNumber("")
     ws.onmessage = (event) => {
       const json = JSON.parse(event.data);
@@ -139,7 +139,7 @@ const validatenumbers = (e)=>{
       <Typography align='center' marginBottom={1} marginTop={2} variant='h2'>Products</Typography>
       <Container maxWidth='sm' sx={{marginBottom:2}} >
       <Stack direction={'row'} alignItems={'center'} alignContent={'center'} spacing={2}>
-        <TextField id='Name_label'   label="Name" variant="outlined" />
+        <TextField id='Name_label' value={name} onChange={(e) => setName(e)}   label="Name" variant="outlined" />
         <TextField id='Price_label' value={number} onChange={(e)=>validatenumbers(e)} label="Price" variant="outlined" />
         <Button onClick={sendSendMessage}>ADD</Button>
       </Stack>
