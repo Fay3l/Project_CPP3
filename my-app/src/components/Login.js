@@ -9,7 +9,7 @@ function LoginPage({ onLogin }) {
     const handleLogin = () => {
       if (username !== '' && password !== '') {
         axios
-        .post("https://192.168.1.53:8000/login", {
+        .post("http://192.168.1.53:8000/login", {
           username: username,
           password: password,
         })
