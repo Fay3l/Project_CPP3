@@ -1,4 +1,11 @@
-product.yourdomain.local {
+:80 {
+    local_dns {
+        example.local 192.168.1.53
+    }
+    respond "Hello, this is a local DNS response."
+}
+
+example.local {
 	reverse_proxy frontend:3000
 	reverse_proxy 192.168.1.53:3000
 }
