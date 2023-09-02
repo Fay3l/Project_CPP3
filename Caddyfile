@@ -1,11 +1,18 @@
-:80 {
-    local_dns {
-        example.local 192.168.1.53
-    }
-    respond "Hello, this is a local DNS response."
-}
 
-example.local {
+
+product.local {
 	reverse_proxy frontend:3000
 	reverse_proxy 192.168.1.53:3000
+	 @local_dns {
+        protocol dns
+        policy allow
+        tls_servername product.local 
+        tls_ca /etc/ssl/certs/local_ca.crt
+        tls_cert /etc/ssl/certs/local_cert.crt
+        tls_key /etc/ssl/private/local_cert.key
+        log
+    }
+    handle @local_dns {
+        reverse_proxy 192.168.1.25:53
+    }
 }
