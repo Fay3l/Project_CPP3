@@ -1,18 +1,14 @@
 
-
 product.local {
-	reverse_proxy frontend:3000
-	reverse_proxy 192.168.1.53:3000
-	 @local_dns {
-        protocol dns
-        policy allow
-        tls_servername product.local 
-        tls_ca /etc/ssl/certs/local_ca.crt
-        tls_cert /etc/ssl/certs/local_cert.crt
-        tls_key /etc/ssl/private/local_cert.key
-        log
+    hosts {
+        192.168.1.53 product.local
     }
-    handle @local_dns {
-        reverse_proxy 192.168.1.25:53
+
+    reverse_proxy 192.168.1.53:3000 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Port {server_port}
+        header_up X-Forwarded-Proto {scheme}
     }
 }
