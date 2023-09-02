@@ -1,4 +1,6 @@
 
-http://192.168.1.53:3000 {
-    redir http://product.local
+
+product {
+	reverse_proxy frontend:3000
+	reverse_proxy 192.168.1.53:3000
 }
