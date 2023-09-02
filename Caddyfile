@@ -1,5 +1,6 @@
-http://a.home:80 , http://192.168.1.53:80 {
+product:80 {
 	reverse_proxy frontend:3000
 	reverse_proxy backend:8000
 	reverse_proxy 192.168.1.53:3000
+	file_server
 }
