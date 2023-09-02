@@ -1,4 +1,4 @@
-:80 {
+http://a.home {
 	reverse_proxy frontend:3000
 	reverse_proxy backend:8000
 }
