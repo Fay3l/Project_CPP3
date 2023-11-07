@@ -1,6 +1,5 @@
 
-product:80 {
-	rewrite ubuntu.localhost:80
+:80 {
 	reverse_proxy /api/* backend:8000
 	reverse_proxy frontend:3000
 }
