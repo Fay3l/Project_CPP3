@@ -117,7 +117,7 @@ function LoginPage({ onLogin }) {
           <Button onClick={()=>{handleLogin("/api/login",password,username);setUsername("");setPassword("");}} variant="contained" color="primary">
             Login
           </Button>
-          <Button onClick={()=>setOpen(true)} >Sign Up</Button>
+          <Button onClick={()=>{setOpen(true);setError(false)}} >Sign Up</Button>
           </Stack>
           <Backdrop
               open={open}
@@ -128,19 +128,19 @@ function LoginPage({ onLogin }) {
                 <CardContent>
                 <Typography sx={{marginRight:2,marginBottom:2}} >Sign Up</Typography>
                 <TextField id='FirstnameEdit_label' error = {error}
-                   label="Firstname" onChange={(e) => {setsignFirstname(e.target.value)}} value={signfirstname} sx={{marginRight:2,marginBottom:2}} ></TextField>
-                <TextField id='LastnameEdit_label' label="Lastname" onChange={(e) => {setsignLastname(e.target.value)}} value={signlastname} ></TextField>
+                   label="Firstname" onChange={(e) => {setsignFirstname(e.target.value);setError(false)}} value={signfirstname} sx={{marginRight:2,marginBottom:2}} ></TextField>
+                <TextField id='LastnameEdit_label' label="Lastname" onChange={(e) => {setsignLastname(e.target.value);setError(false)}} value={signlastname} ></TextField>
                 <TextField id='UsernameEdit_label' error = {error}
-                   label="Username" onChange={(e) => {setsignUsername(e.target.value)}} value={signusername} sx={{marginRight:2,marginBottom:2}} ></TextField>
+                   label="Username" onChange={(e) => {setsignUsername(e.target.value);setError(false)}} value={signusername} sx={{marginRight:2,marginBottom:2}} ></TextField>
                 <TextField id='EmailEdit_label' error = {error}
-                  label="Email" onChange={(e) => {setsignEmail(e.target.value)}} value={signemail}  ></TextField>
+                  label="Email" onChange={(e) => {setsignEmail(e.target.value);setError(false)}} value={signemail}  ></TextField>
                 <TextField id='AddressEdit_label' error = {error}
-                label="Address" onChange={(e) => {setsignAddress(e.target.value)}} value={signaddress} sx={{marginRight:2,marginBottom:2}}  ></TextField>
+                label="Address" onChange={(e) => {setsignAddress(e.target.value);setError(false)}} value={signaddress} sx={{marginRight:2,marginBottom:2}}  ></TextField>
                 <FormControl variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password" error={error} >Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
-                  onChange={(e) => {setsignPassword(e.target.value)}} 
+                  onChange={(e) => {setsignPassword(e.target.value);setError(false)}} 
                   value={signpassword}
                   type={showPassword ? 'text' : 'password'}
                   endAdornment={
