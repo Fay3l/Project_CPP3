@@ -38,7 +38,7 @@ services:
     
 
   caddy_server:
-    image: caddy:latest
+    image: caddy:2.7
     restart: always
     volumes:
       - ./back-end/Caddyfile:/etc/caddy/Caddyfile
