@@ -2,7 +2,7 @@ FROM python:3.10
 
 WORKDIR /code
 
-COPY classe /code
+COPY classes.py /code
 
 COPY sql.py /code
 

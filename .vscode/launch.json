@@ -8,7 +8,7 @@
             "name": "Test Production",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/test.py",
+            "program": "${workspaceFolder}/back-end/test.py",
             "console": "integratedTerminal",
             "justMyCode": true
         }

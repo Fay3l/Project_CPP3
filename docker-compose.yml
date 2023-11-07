@@ -2,7 +2,7 @@ version: '3'
 services:
   backend:
     build:
-      context: .
+      context: ./back-end/
       dockerfile: Dockerfile
     restart: always
     ports:
@@ -10,17 +10,19 @@ services:
     depends_on:
       - db_postgres
     networks:
-      - app_network
+      - default
 
   frontend:
     build:
-      context: ./my-app/
+      context: ./front-end/
       dockerfile: ./Dockerfile
     restart: always
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
     networks:
-      - app_network
+      - default
 
   db_postgres:
     image: postgres:15
@@ -32,22 +34,21 @@ services:
         POSTGRES_PASSWORD: root
         POSTGRES_DB: product
     networks:
-      - app_network
+      - default
     
 
   caddy_server:
     image: caddy:latest
     restart: always
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./back-end/Caddyfile:/etc/caddy/Caddyfile
     ports:
       - "80:80"
       - "443:443"
-    depends_on:
-      - frontend
     networks:
-      - app_network
+      - default
+    
 
 networks:
-  app_network:
+  default:
     driver: bridge
