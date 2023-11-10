@@ -8,13 +8,13 @@ export default function UsersProducts({user,open,setOpen}){
                 <Card>
                     <CardContent sx={{display:'flex',flexDirection:'column'}} >
                         {
-                            user.products.map(product =>{
+                            user.map(product =>{
                                 return(
                                     <Card sx={{marginBottom:2}} key={product.id}>
                                         <CardContent>
-                                        <Typography>Product</Typography>
-                                        <Typography>Name: {product.name}</Typography>
-                                        <Typography>Price: {product.price} €</Typography>
+                                            <Typography>Product</Typography>
+                                            <Typography>Name: {product.name}</Typography>
+                                            <Typography>Price: {product.price} €</Typography>
                                         </CardContent>
                                     </Card>
                                 )

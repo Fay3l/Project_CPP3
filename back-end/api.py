@@ -39,7 +39,12 @@ class UserCreate(BaseModel):
     email:str
     address:str
 
-class UserDescription(BaseModel):
+class UserUpdate(BaseModel):
+    username:str
+    firstname:str
+    lastname:str
+    email:str
+    address:str
     description:str
 
 class Product(BaseModel):
@@ -93,7 +98,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
-    except JWTError:
+    except JWTError :
         raise credentials_exception
     user = connectionsql.sql.get_user_by_username(username)
     if not user:
@@ -125,19 +130,19 @@ async def create_login(user:UserCreate):
                 data["username"],pwd_context.hash(data["password"]),data["address"],"",data["email"],data["firstname"],data["lastname"])
             return True
         else:
-            raise HTTPException(status_code=401,detail="Username already used")
+            raise HTTPException(status_code=401,detail="Username already uses")
     else:
         raise HTTPException(status_code=400, detail="Empty username,email or password")
     
 
-@app.post("/api/user/description/update")
-async def update_description_user(description:UserDescription,current_user: UserCreate = Depends(get_current_user)):
-    return JSONResponse(content=connectionsql.sql.update_description(current_user[0].get("id"),description.description)) 
+@app.post("/api/user/update")
+async def update_description_user(userupdate:UserUpdate,current_user: UserCreate = Depends(get_current_user)):
+    return JSONResponse(content=connectionsql.sql.update_user(current_user[0].get("id"),userupdate.description,userupdate.username
+                                                                    ,userupdate.firstname,userupdate.lastname,userupdate.email,userupdate.address)) 
     
 @app.post("/api/user/product/create")
 async def create_product_user(product:CreateProduct,current_user: UserCreate = Depends(get_current_user)):
-    data = jsonable_encoder(product)
-    return JSONResponse(content=connectionsql.sql.commit_product(current_user[0].get("id"),data["name"],data["price"]))
+    return JSONResponse(content=connectionsql.sql.commit_product(current_user[0].get("id"),product.name,product.price))
 
 
 @app.get("/api/")
@@ -162,8 +167,7 @@ async def get_product_user(user_id:uuid.UUID,product_id:uuid.UUID):
 
 @app.put("/api/user/product/update", response_model=Product)
 async def update_product_user(product:Product,current_user: UserCreate = Depends(get_current_user)):
-    update_product = jsonable_encoder(product)
-    return JSONResponse(content=connectionsql.sql.update_product(update_product["id"],current_user[0].get("id"),update_product["name"],update_product["price"]))
+    return JSONResponse(content=connectionsql.sql.update_product(product.id,current_user[0].get("id"),product.name,product.price))
 
 @app.delete("/api/user/product/delete/")
 async def delete_product_user(product_id:uuid.UUID,current_user: UserCreate = Depends(get_current_user)):

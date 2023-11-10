@@ -1,7 +1,7 @@
 import React from "react";
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { CardActions, CardContent,Grid } from '@mui/material';
+import { CardActions, CardContent,Grid, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import ModeIcon from '@mui/icons-material/Mode';
@@ -30,8 +30,8 @@ function Product({data_product,handleOpen,Deleteproduct}){
               <Typography >Price: {product.price} €</Typography>
               </CardContent>
               <CardActions>
-                  <IconButton onClick={() => handleOpen(product.id,product.name,product.price)} ><ModeIcon sx={{color:'orange'}}></ModeIcon></IconButton>
-                  <IconButton onClick={() => Deleteproduct(product.id)}><DeleteIcon sx={{color:'red'}} ></DeleteIcon></IconButton>
+                  <Tooltip title='Edit'><IconButton onClick={() => handleOpen(product.id,product.name,product.price)} ><ModeIcon sx={{color:'orange'}}></ModeIcon></IconButton></Tooltip>
+                  <Tooltip title='Delete'><IconButton onClick={() => Deleteproduct(product.id)}><DeleteIcon sx={{color:'red'}} ></DeleteIcon></IconButton></Tooltip>
               </CardActions>
               </Card>
               </Slide>

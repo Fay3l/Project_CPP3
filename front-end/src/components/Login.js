@@ -1,3 +1,4 @@
+import './../css/style.css'
 import React,{useState} from 'react'
 import { CardActions, CardContent,Container,Typography,Stack,TextField,Button, Box,InputAdornment,FormControl,InputLabel,OutlinedInput, FormHelperText } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
@@ -9,16 +10,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios, { HttpStatusCode } from 'axios'
 
+
 function LoginPage({ onLogin }) {
     const [showPassword,setShowPassword] = useState(false)
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [signusername, setsignUsername] = useState('');
-    const [signfirstname, setsignFirstname] = useState('');
-    const [signlastname, setsignLastname] = useState('');
-    const [signpassword, setsignPassword] = useState('');
-    const [signemail, setsignEmail] = useState('');
-    const [signaddress, setsignAddress] = useState('');
+    const [user, setUser] = useState({username:'',password:''});
+    const [signuser, setSignUser] = useState({username:'',firstname:'',lastname:'',password:'',email:'',address:''});
     const [open,setOpen] = useState(false);
     const [error, setError] = useState(false);
     const [error_text, setError_text] = useState('');
@@ -48,6 +44,7 @@ function LoginPage({ onLogin }) {
         })
         .catch(function(error){
           setError_text(error.response.data.detail)
+          console.log(error.response.data)
           console.log('Login failed '+ error.response.status);
           setError(true)
         })
@@ -79,14 +76,15 @@ function LoginPage({ onLogin }) {
     return (
       <Container maxWidth='sm'>
         <Box>
-        <Typography align="center" variant="h2" marginBottom={2}>
+        <Typography align="center" variant="h2" marginTop={2} marginBottom={2}>
           Login
         </Typography>
         <Stack spacing={2}>
           <TextField
             label="Username"
-            value={username}
-            onChange={(e) => {setUsername(e.target.value);setError(false)}}
+            className='TextFieldStyle'
+            value={user.username}
+            onChange={(e) => {setUser(state =>{return{...state,username:e.target.value}});setError(false)}}
             variant="outlined"
             error = {error}
           />
@@ -94,8 +92,9 @@ function LoginPage({ onLogin }) {
           <InputLabel htmlFor="outlined-adornment-password" error={error}>Password</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
-            value={password}
-            onChange={(e) => {setPassword(e.target.value);setError(false)}}
+            value={user.password}
+            className='TextFieldStyle'
+            onChange={(e) => {setUser(state =>{return{...state,password:e.target.value}});setError(false)}}
             error = {error}
             type={showPassword ? 'text' : 'password'}
             endAdornment={
@@ -114,10 +113,10 @@ function LoginPage({ onLogin }) {
             />
           </FormControl>
           {error === true && (<FormHelperText error={error}>{error_text}</FormHelperText>)}
-          <Button onClick={()=>{handleLogin("/api/login",password,username);setUsername("");setPassword("");}} variant="contained" color="primary">
+          <Button  onClick={()=>{handleLogin("/api/login",user.password,user.username);setUser(()=>{return{password:'',username:''}})}} variant="contained" color="primary">
             Login
           </Button>
-          <Button onClick={()=>{setOpen(true);setError(false)}} >Sign Up</Button>
+          <Button  onClick={()=>{setOpen(true);setError(false)}} >Sign Up</Button>
           </Stack>
           <Backdrop
               open={open}
@@ -128,20 +127,20 @@ function LoginPage({ onLogin }) {
                 <CardContent>
                 <Typography sx={{marginRight:2,marginBottom:2}} >Sign Up</Typography>
                 <TextField id='FirstnameEdit_label' error = {error}
-                   label="Firstname" onChange={(e) => {setsignFirstname(e.target.value);setError(false)}} value={signfirstname} sx={{marginRight:2,marginBottom:2}} ></TextField>
-                <TextField id='LastnameEdit_label' label="Lastname" onChange={(e) => {setsignLastname(e.target.value);setError(false)}} value={signlastname} ></TextField>
+                   label="Firstname" onChange={(e) => {setSignUser(state=>{return{...state,firstname:e.target.value}});setError(false)}} value={signuser.firstname} sx={{marginRight:2,marginBottom:2}} ></TextField>
+                <TextField id='LastnameEdit_label' label="Lastname" onChange={(e) => {setSignUser(state=>{return{...state,lastname:e.target.value}});setError(false)}} value={signuser.lastname} ></TextField>
                 <TextField id='UsernameEdit_label' error = {error}
-                   label="Username" onChange={(e) => {setsignUsername(e.target.value);setError(false)}} value={signusername} sx={{marginRight:2,marginBottom:2}} ></TextField>
+                   label="Username" onChange={(e) => {setSignUser(state=>{return{...state,username:e.target.value}});setError(false)}} value={signuser.username} sx={{marginRight:2,marginBottom:2}} ></TextField>
                 <TextField id='EmailEdit_label' error = {error}
-                  label="Email" onChange={(e) => {setsignEmail(e.target.value);setError(false)}} value={signemail}  ></TextField>
+                  label="Email" onChange={(e) => {setSignUser(state=>{return{...state,email:e.target.value}});setError(false)}} value={signuser.email}  ></TextField>
                 <TextField id='AddressEdit_label' error = {error}
-                label="Address" onChange={(e) => {setsignAddress(e.target.value);setError(false)}} value={signaddress} sx={{marginRight:2,marginBottom:2}}  ></TextField>
+                label="Address" onChange={(e) => {setSignUser(state=>{return{...state,address:e.target.value}});setError(false)}} value={signuser.address} sx={{marginRight:2,marginBottom:2}}  ></TextField>
                 <FormControl variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password" error={error} >Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
-                  onChange={(e) => {setsignPassword(e.target.value);setError(false)}} 
-                  value={signpassword}
+                  onChange={(e) => {setSignUser(state=>{return{...state,password:e.target.value}});setError(false)}} 
+                  value={signuser.password}
                   type={showPassword ? 'text' : 'password'}
                   endAdornment={
                     <InputAdornment position="end">
@@ -162,8 +161,8 @@ function LoginPage({ onLogin }) {
                 </CardContent>
                 <CardActions sx={{justifyContent:'flex-end',alignItems:'center'}}>
                   <IconButton onClick={() =>{
-                    handleSignup("/api/signup",signpassword,signusername,signemail,signaddress,signfirstname,signlastname);
-                    setsignAddress("");setsignEmail("");setsignPassword("");setsignUsername("");setsignLastname("");setsignFirstname("")}} ><CheckIcon sx={{color:'green'}} ></CheckIcon></IconButton>
+                    handleSignup("/api/signup",signuser.password,signuser.username,signuser.email,signuser.address,signuser.firstname,signuser.lastname);
+                    setSignUser(()=>{return{address:'',username:'',email:'',firstname:'',lastname:'',password:''}})}} ><CheckIcon sx={{color:'green'}} ></CheckIcon></IconButton>
                   <IconButton onClick={() =>{setOpen(false)}}><CloseIcon sx={{color:'red'}} ></CloseIcon></IconButton>
                 </CardActions>
               </Card>

@@ -1,0 +1,21 @@
+
+.TextFieldStyle{
+    background-color: white;
+    border-radius: 2px;
+}
+
+.ButtonStyle  {
+    background-color: #F6CE1B;
+}
+
+.ButtonStyle2  {
+    color: #F6CE1B;
+}
+
+.BoxStyleUser {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2px;
+}

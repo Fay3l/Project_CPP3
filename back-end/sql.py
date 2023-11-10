@@ -34,9 +34,9 @@ def sqlalchemy_to_json(obj):
 # Grant priviles on database :  psql=# grant all privileges on database <dbname> to <username> ;
 # psql -h localhost -d product -U root -p 5432
 
-# 'postgresql+psycopg2://root:root@db_postgres:5432/product'
+# 'postgresql+psycopg2://root:root@db_postgres:5432/product' 
 # 'postgresql+psycopg2://root:root@localhost:5432/product'
-engine = create_engine('postgresql+psycopg2://root:root@db_postgres:5432/product')
+engine = create_engine('postgresql+psycopg2://root:root@db_postgres:5432/product') 
 Base.metadata.create_all(engine)
 session =Session(engine)
 
@@ -83,15 +83,16 @@ class SQL:
                     id=userout.id, username=userout.username, products=userout.products,email=userout.email,address=userout.address,description=userout.description
                     ,firstname=userout.firstname,lastname=userout.lastname))
 
-    def update_description(self,user_id,description):
+    def update_user(self,user_id,description,username,firstname
+                           ,lastname,email,address):
         with engine.begin() as conn:
             res = update(User).where(User.id == user_id)
-            conn.execute(res,{"description":f"{description}"})
+            conn.execute(res,{"username":f"{username}","firstname":f"{firstname}","lastname":f"{lastname}"
+                              ,"email":f"{email}","address":f"{address}","description":f"{description}"})
             conn.commit()
         userout = session.query(User).where(User.id == user_id).first()
-        return sqlalchemy_to_json(UserOut(
-                    id=userout.id, username=userout.username, products=userout.products,email=userout.email,address=userout.address,description=userout.description
-                    ,firstname=userout.firstname,lastname=userout.lastname))
+        return sqlalchemy_to_json(UserOut(id=userout.id, username=userout.username, products=userout.products,email=userout.email,address=userout.address
+                                          ,description=userout.description,firstname=userout.firstname,lastname=userout.lastname))
     
     def delete_product(self,product_id,user_id):
         with engine.begin() as conn:

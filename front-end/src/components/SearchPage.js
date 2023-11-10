@@ -29,23 +29,22 @@ export default function SearchPage({setsearch,value,setvalue,data_users,search_u
           </IconButton>
         </Paper>
         <Stack spacing={2}>
-          {data_users.map(user=>{
+          {data_users.map((user,index)=>{
             return(
-              <Container>
-                <Card >
+              <Container key={index}>
+                <Card>
                   <CardContent sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
                   <Avatar src="/broken-image.jpg"></Avatar>
                   <Typography>{user.username}</Typography>
                   <IconButton onClick={()=>setOpen(true)}><VisibilityIcon></VisibilityIcon></IconButton>
                   </CardContent>
                 </Card>
-                {open === true && (<UsersProducts user={user} open={open} setOpen={setOpen}></UsersProducts>)}
+                {open === true && (<UsersProducts user={user.products} open={open} setOpen={setOpen}></UsersProducts>)}
               </Container>
             )
           })}
         </Stack>
-        </Container>
         
-
+        </Container>
     )
 }

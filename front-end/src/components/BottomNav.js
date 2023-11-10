@@ -13,7 +13,7 @@ export default function LabelBottomNavigation({value,setValue,setsearch}) {
   };
 
   return (
-    <Box sx={{display: { xs: 'block', md: 'none', lg: 'none' },position:'absolute',bottom:0,width:'95%'}} >
+    <Box sx={{display: { xs: 'block', md: 'none', lg: 'none' },position:'absolute',left:0,bottom:0,width:'100%'}} >
     <BottomNavigation sx={{display:'flex',justifyContent:'center',alignItems:'center'}} value={value} onChange={handleChange}>
       <BottomNavigationAction
         label="Search"
