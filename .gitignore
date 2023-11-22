@@ -1,4 +1,5 @@
 
 /actions-runner
 /__pycache__
-/.vscode
+.vscode
+.env

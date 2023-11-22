@@ -43,11 +43,23 @@ services:
     volumes:
       - ./back-end/Caddyfile:/etc/caddy/Caddyfile
     ports:
-      - "80:80"
+      - "8080:8080"
       - "443:443"
     networks:
       - default
     
+  ngrok:
+    image: wernight/ngrok
+    ports:
+      - "4040:4040"
+    environment:
+        NGROK_PROTOCOL: http
+        NGROK_PORT: caddy_server:8080
+        NGROK_AUTH: ${NGROK_AUTH}
+    depends_on:
+      - caddy_server
+    networks:
+      - default
 
 networks:
   default:

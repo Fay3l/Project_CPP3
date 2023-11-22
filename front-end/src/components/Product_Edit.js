@@ -9,19 +9,14 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 
 function ProductEdit({selectedProductId,selectedProductName,selectedProductPrice,setProduct,open,Editproduct,handleClose}){
-  const validatenumbers = (e)=>{
-    let input = e.target.value
-    if(input.match(/^([0-9]{1,})?(\.)?([0-9]{1,})?$/))
-      setProduct(state=>{return{...state,price:validatenumbers(e.target.value)}} )
-  }
   return(
     <Backdrop open={open}>
       <Container maxWidth="sm">
         <Card >
           <CardContent>
           <Typography sx={{marginBottom:2}}>Edit Product</Typography>
-          <TextField id='NameEdit_label' label="Name" value={selectedProductName} onChange={e=>setProduct(state=>{return{...state,name:e.target.value}} )} sx={{marginRight:2,marginBottom:2}} ></TextField>
-          <TextField id='PriceEdit_label' label="Price" value={selectedProductPrice} onChange={e=>validatenumbers(e)} ></TextField>
+          <TextField id='NameEdit_label' label="Name" value={selectedProductName} onChange={e=>setProduct(state=>{return{...state,name:e.target.value}})} sx={{marginRight:2,marginBottom:2}} ></TextField>
+          <TextField id='PriceEdit_label' label="Price" value={selectedProductPrice} onChange={e=>setProduct(state=>{return{...state,price:e.target.value}})} ></TextField>
           </CardContent>
           <CardActions sx={{justifyContent:'flex-end',alignItems:'center'}}>
             <Tooltip title="Edit"><IconButton onClick={() =>{Editproduct(selectedProductId,selectedProductName,selectedProductPrice);handleClose()}}><CheckIcon sx={{color:'green'}} ></CheckIcon></IconButton></Tooltip>
